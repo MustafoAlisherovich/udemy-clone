@@ -3,6 +3,8 @@ import './globals.css'
 import { Inter, Space_Grotesk as SpaceGrotesk } from 'next/font/google'
 import { ChildProps } from '@/types'
 import { ThemeProvider } from '@/components/providers/theme-provider'
+import { languages } from '@/i18n/settings'
+import { dir } from 'i18next'
 
 const inter = Inter({
 	variable: '--font-inter',
@@ -15,15 +17,23 @@ const spaceGrotesk = SpaceGrotesk({
 	weight: ['300', '400', '500', '600', '700'],
 })
 
+export async function generateStaticParams() {
+	return languages.map(lng => ({ lng }))
+}
+
 export const metadata: Metadata = {
 	title: 'Udemy-clone',
 	description: 'Startup Praktikum Next.js Project',
 	icons: { icon: '/logo.svg' },
 }
 
-function RootLayout({ children }: ChildProps) {
+interface Props extends ChildProps {
+	params: { lng: string }
+}
+
+function RootLayout({ children, params: { lng } }: Props) {
 	return (
-		<html lang='en' suppressHydrationWarning>
+		<html lang={lng} dir={dir(lng)} suppressHydrationWarning>
 			<body
 				className={`${inter.variable} ${spaceGrotesk.variable} overflow-x-hidden`}
 				suppressHydrationWarning
