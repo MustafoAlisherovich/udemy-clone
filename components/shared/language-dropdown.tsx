@@ -13,7 +13,6 @@ import { lngs } from '@/constants'
 import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { useTranslation } from '@/i18n/client'
 import { useParams } from 'next/navigation'
 
 function LanguageDropdown() {
