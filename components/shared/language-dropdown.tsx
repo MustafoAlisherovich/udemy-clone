@@ -12,16 +12,31 @@ import {
 import { lngs } from '@/constants'
 import Image from 'next/image'
 import Link from 'next/link'
-import { cn } from '@/lib/utils'
+import { cn, getCurrentLng } from '@/lib/utils'
 import { useParams } from 'next/navigation'
 
-function LanguageDropdown() {
+interface Props {
+	isMobile?: boolean
+}
+
+function LanguageDropdown({ isMobile = false }: Props) {
 	const { lng } = useParams()
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant={'ghost'} size={'icon'}>
+				<Button
+					variant={'ghost'}
+					size={'icon'}
+					className={cn(
+						isMobile && 'h-12 w-full bg-primary hover:bg-primary/80'
+					)}
+				>
 					<Languages />
+					{isMobile && (
+						<span className='ml-2 font-spaceGrotesk font-medium'>
+							{getCurrentLng(lng as string)}
+						</span>
+					)}
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='w-40'>

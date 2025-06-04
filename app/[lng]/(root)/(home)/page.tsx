@@ -1,10 +1,11 @@
-import { translation } from '@/i18n/server'
-import { LngParams } from '@/types'
+import Hero from './_components/hero'
 
-const Page = async ({ params: { lng } }: LngParams) => {
-	const { t } = await translation(lng)
-
-	return <div className='mt-24'>{t('home')}</div>
+function Page() {
+	return (
+		<>
+			<Hero />
+		</>
+	)
 }
 
 export default Page
