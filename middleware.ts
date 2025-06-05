@@ -8,7 +8,14 @@ const intlMiddleware = createMiddleware({
 
 export default authMiddleware({
 	beforeAuth: req => intlMiddleware(req),
-	publicRoutes: ['/:lng'],
+	publicRoutes: [
+		'/:lng',
+		'/:lng/courses',
+		'/:lng/blogs',
+		'/:lng/blogs/:slug',
+		'/:lng/contacts',
+		'/:lng/courses/:slug',
+	],
 })
 
 export const config = {

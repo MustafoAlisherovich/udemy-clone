@@ -1,5 +1,13 @@
+import TopBar from '@/components/shared/top-bar'
+import AllCourses from './_components/all-courses'
+
 function Page() {
-	return <div>Courses</div>
+	return (
+		<>
+			<TopBar label='allCourses' description='allCourseDescription' />
+			<AllCourses />
+		</>
+	)
 }
 
 export default Page
