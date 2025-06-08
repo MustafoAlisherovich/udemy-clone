@@ -15,6 +15,7 @@ export default authMiddleware({
 		'/:lng/blogs/:slug',
 		'/:lng/contacts',
 		'/:lng/courses/:slug',
+		'/:lng/api/uploadthing',
 	],
 })
 
