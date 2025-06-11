@@ -31,6 +31,7 @@ import { ImageDown } from 'lucide-react'
 import { Dialog, DialogContent } from '../ui/dialog'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { twMerge } from 'tailwind-merge'
 
 function CourseFieldsForm() {
 	const [isLoading, setIsLoading] = useState(false)
@@ -297,7 +298,7 @@ function CourseFieldsForm() {
 							</FormLabel>
 							<UploadButton
 								endpoint={'imageUploader'}
-								config={{ appendOnPaste: true, mode: 'auto' }}
+								config={{ appendOnPaste: true, mode: 'auto', cn: twMerge }}
 								onClientUploadComplete={res => {
 									setPreviewImage(res[0].ufsUrl)
 								}}
