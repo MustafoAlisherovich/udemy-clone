@@ -32,6 +32,7 @@ import { Dialog, DialogContent } from '../ui/dialog'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
+import { useUser } from '@clerk/nextjs'
 
 function CourseFieldsForm() {
 	const [isLoading, setIsLoading] = useState(false)
@@ -39,6 +40,7 @@ function CourseFieldsForm() {
 	const [open, setOpen] = useState(false)
 
 	const router = useRouter()
+	const { user } = useUser()
 
 	const form = useForm<z.infer<typeof courseSchema>>({
 		resolver: zodResolver(courseSchema),
@@ -52,12 +54,15 @@ function CourseFieldsForm() {
 		}
 
 		const { oldPrice, currentPrice } = values
-		const promise = createCourse({
-			...values,
-			oldPrice: +oldPrice,
-			currentPrice: +currentPrice,
-			previewImage,
-		})
+		const promise = createCourse(
+			{
+				...values,
+				oldPrice: +oldPrice,
+				currentPrice: +currentPrice,
+				previewImage,
+			},
+			user?.id as string
+		)
 			.then(() => {
 				form.reset()
 				router.push('/en/instructor/my-courses')
