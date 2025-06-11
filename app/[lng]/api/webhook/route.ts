@@ -10,23 +10,23 @@ export async function POST(req: Request) {
 
 	if (!WEBHOOK_SECRET) {
 		throw new Error(
-			'Please add WEBHOOK_SECRET from Clerk Dashboard to .env or 	.env.local'
+			'Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local'
 		)
 	}
 
 	const headerPayload = headers()
-	const svixId = headerPayload.get('svix_id')
-	const svixTimestamp = headerPayload.get('svix_timestamp')
-	const svixSignature = headerPayload.get('svix_signature')
+	const svixId = headerPayload.get('svix-id')
+	const svixTimestamp = headerPayload.get('svix-timestamp')
+	const svixSignature = headerPayload.get('svix-signature')
 
 	if (!svixId || !svixTimestamp || !svixSignature) {
-		return new Response('Error occured -- no svix	headers', {
+		return new Response('Error occured -- no svix headers', {
 			status: 400,
 		})
 	}
 
 	const payload = await req.json()
-	const body = await JSON.stringify(payload)
+	const body = JSON.stringify(payload)
 
 	const wh = new Webhook(WEBHOOK_SECRET)
 
