@@ -10,12 +10,13 @@ import {
 	FormControl,
 	FormField,
 	FormItem,
+	FormLabel,
 	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
-import UseToggle from '@/hooks/use-toggle-edit'
-import { courseFieldsSchema } from '@/lib/validation'
+import UseToggleEdit from '@/hooks/use-toggle-edit'
+import { priceSchema } from '@/lib/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Edit2, X } from 'lucide-react'
 import { usePathname } from 'next/navigation'
@@ -24,36 +25,43 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-function CourseFields(course: ICourse) {
-	const { state, onToggle } = UseToggle()
+function Price(course: ICourse) {
+	const { state, onToggle } = UseToggleEdit()
 
 	return (
 		<Card>
 			<CardContent className='relative p-6'>
 				<div className='flex items-center justify-between'>
-					<span className='text-lg font-medium'>Course Title</span>
+					<span className='text-lg font-medium'>Change Price</span>
 					<Button size={'icon'} variant={'ghost'} onClick={onToggle}>
 						{state ? <X /> : <Edit2 />}
 					</Button>
 				</div>
 				<Separator className='my-3' />
-
 				{state ? (
 					<Forms course={course} onToggle={onToggle} />
 				) : (
 					<div className='flex flex-col space-y-2'>
 						<div className='flex items-center gap-2'>
-							<span className='font-spaceGrotesk font-bold text-muted-foreground'>
-								Title:
-							</span>
-							<span className='font-medium'>{course.title}</span>
-						</div>
-						<div className='flex items-center gap-2'>
-							<span className='font-spaceGrotesk font-bold text-muted-foreground'>
-								Slug:
+							<span className='font-space-grotesk font-bold text-muted-foreground'>
+								Old price:
 							</span>
 							<span className='font-medium'>
-								{course.slug ?? 'Not configured'}
+								{course.oldPrice.toLocaleString('en-US', {
+									style: 'currency',
+									currency: 'USD',
+								})}
+							</span>
+						</div>
+						<div className='flex items-center gap-2'>
+							<span className='font-space-grotesk font-bold text-muted-foreground'>
+								Current price:
+							</span>
+							<span className='font-medium'>
+								{course.currentPrice.toLocaleString('en-US', {
+									style: 'currency',
+									currency: 'USD',
+								})}
 							</span>
 						</div>
 					</div>
@@ -63,7 +71,7 @@ function CourseFields(course: ICourse) {
 	)
 }
 
-export default CourseFields
+export default Price
 
 interface FormsProps {
 	course: ICourse
@@ -72,31 +80,34 @@ interface FormsProps {
 
 function Forms({ course, onToggle }: FormsProps) {
 	const [isLoading, setIsLoading] = useState(false)
+
 	const pathname = usePathname()
 
-	const form = useForm<z.infer<typeof courseFieldsSchema>>({
-		resolver: zodResolver(courseFieldsSchema),
+	const form = useForm<z.infer<typeof priceSchema>>({
+		resolver: zodResolver(priceSchema),
 		defaultValues: {
-			title: course.title,
-			slug: course.slug,
+			oldPrice: ` ${course.oldPrice}`,
+			currentPrice: ` ${course.currentPrice}`,
 		},
 	})
 
-	const onSubmit = (values: z.infer<typeof courseFieldsSchema>) => {
+	const onSubmit = (values: z.infer<typeof priceSchema>) => {
 		setIsLoading(true)
-		const promise = updateCourse(course._id, values, pathname)
+		const { currentPrice, oldPrice } = values
+		const promise = updateCourse(
+			course._id,
+			{ currentPrice: +currentPrice, oldPrice: +oldPrice },
+			pathname
+		)
 			.then(() => onToggle())
-			.finally(() => {
-				setIsLoading(false)
-			})
+			.finally(() => setIsLoading(false))
 
 		toast.promise(promise, {
 			loading: 'Loading...',
-			success: 'Successfully updated!',
-			error: 'Something went wrong!',
+			success: 'Successfully updated',
+			error: 'Something went wrong',
 		})
 	}
-
 	return (
 		<>
 			{isLoading && <FillLoading />}
@@ -104,11 +115,19 @@ function Forms({ course, onToggle }: FormsProps) {
 				<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-3'>
 					<FormField
 						control={form.control}
-						name='title'
+						name='oldPrice'
 						render={({ field }) => (
 							<FormItem>
+								<FormLabel>
+									Old price<span className='text-red-500'>*</span>
+								</FormLabel>
 								<FormControl>
-									<Input disabled={isLoading} {...field} />
+									<Input
+										{...field}
+										className='bg-secondary'
+										disabled={isLoading}
+										type='number'
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -116,11 +135,19 @@ function Forms({ course, onToggle }: FormsProps) {
 					/>
 					<FormField
 						control={form.control}
-						name='slug'
+						name='currentPrice'
 						render={({ field }) => (
 							<FormItem>
+								<FormLabel>
+									Current price<span className='text-red-500'>*</span>
+								</FormLabel>
 								<FormControl>
-									<Input disabled={isLoading} {...field} />
+									<Input
+										{...field}
+										className='bg-secondary'
+										disabled={isLoading}
+										type='number'
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
