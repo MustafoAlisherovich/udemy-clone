@@ -10,10 +10,14 @@ import SelectFields from './_components/select-fields'
 import Sections from './_components/sections'
 import Price from './_components/price'
 import PreviewImage from './_components/preview-image'
+import { getSections } from '@/actions/section.action'
 
 async function Page({ params }: { params: { courseId: string } }) {
 	const courseJSON = await getCourseById(params.courseId)
+	const sectionJSON = await getSections(params.courseId)
+
 	const course = JSON.parse(JSON.stringify(courseJSON))
+	const section = JSON.parse(JSON.stringify(sectionJSON))
 
 	return (
 		<>
@@ -47,7 +51,7 @@ async function Page({ params }: { params: { courseId: string } }) {
 						</span>{' '}
 						<LayoutPanelLeft />
 					</div>
-					<Sections />
+					<Sections course={course} sections={section} />
 
 					{/* Price */}
 					<div className='flex items-center gap-2'>
@@ -67,7 +71,7 @@ async function Page({ params }: { params: { courseId: string } }) {
 						{''}
 						<Images />
 					</div>
-					<PreviewImage />
+					<PreviewImage {...course} />
 				</div>
 			</div>
 		</>

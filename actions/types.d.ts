@@ -26,3 +26,8 @@ export interface IUpdateUser {
 		picture: string
 	}
 }
+
+export interface IUpdatedSection {
+	lists: { _id: string; position: number }[]
+	path: string
+}
