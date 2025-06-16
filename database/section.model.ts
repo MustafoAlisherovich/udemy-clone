@@ -1,10 +1,11 @@
-import { model, models, Schema } from 'mongoose'
+import { Schema, model, models } from 'mongoose'
 
 const SectionSchema = new Schema(
 	{
 		title: String,
-		position: { type: Number },
+		position: Number,
 		course: { type: Schema.Types.ObjectId, ref: 'Course' },
+		lessons: [{ type: Schema.Types.ObjectId, ref: 'Lesson' }],
 	},
 	{ timestamps: true }
 )

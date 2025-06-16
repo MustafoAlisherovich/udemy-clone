@@ -27,7 +27,22 @@ export interface IUpdateUser {
 	}
 }
 
-export interface IUpdatedSection {
+export interface IUpdateSection {
 	lists: { _id: string; position: number }[]
+	path: string
+}
+
+export interface ILessonFields {
+	title: string
+	content: string
+	videoUrl: string
+	hours: string
+	minutes: string
+	seconds: string
+}
+
+export interface ICreateLesson {
+	lesson: ILessonFields
+	section: string
 	path: string
 }
