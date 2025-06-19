@@ -2,7 +2,7 @@
 
 import Course from '@/database/course.model'
 import { connectToDatabase } from '@/lib/mongoose'
-import { ICreateCourse } from './types'
+import { GetCoursesParams, ICreateCourse } from './types'
 import { revalidatePath } from 'next/cache'
 import { ICourse } from '@/app.types'
 import User from '@/database/user.model'
@@ -10,6 +10,7 @@ import User from '@/database/user.model'
 export const createCourse = async (data: ICreateCourse, clerkId: string) => {
 	try {
 		await connectToDatabase()
+
 		const user = await User.findOne({ clerkId })
 		await Course.create({ ...data, instructor: user._id })
 		revalidatePath('/en/instructor/my-courses')
@@ -19,15 +20,26 @@ export const createCourse = async (data: ICreateCourse, clerkId: string) => {
 	}
 }
 
-export const getCourses = async (clerkId: string) => {
+export const getCourses = async (params: GetCoursesParams) => {
 	try {
 		await connectToDatabase()
+		const { clerkId, page = 1, pageSize = 6 } = params
+
+		const skipAmount = (page - 1) * pageSize
+
 		const user = await User.findOne({ clerkId })
-		const courses = await Course.find({ instructor: user._id })
-		return courses as ICourse[]
+		const { _id } = user
+		const courses = await Course.find({ instructor: _id })
+			.skip(skipAmount)
+			.limit(pageSize)
+
+		const totalCourses = await Course.find({ instructor: _id }).countDocuments()
+		const isNext = totalCourses > skipAmount + courses.length
+
+		return { courses, isNext, totalCourses }
 	} catch (error) {
 		console.log(error)
-		throw new Error('Something went wrong while getting course!')
+		throw new Error('Soething went wrong while getting course!')
 	}
 }
 
