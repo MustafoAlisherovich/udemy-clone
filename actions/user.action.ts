@@ -25,7 +25,6 @@ export const createUser = async (data: ICreateUser) => {
 
 		return newUser
 	} catch (error) {
-		console.log(error)
 		throw new Error('Error creating user, Please try again')
 	}
 }
@@ -38,7 +37,6 @@ export const updateUser = async (data: IUpdateUser) => {
 		if (path) return revalidatePath(path)
 		return updatedUser
 	} catch (error) {
-		console.log(error)
 		throw new Error('Error updating user. Please try again')
 	}
 }
@@ -48,7 +46,6 @@ export const getUserById = async (clerkId: string) => {
 		await connectToDatabase()
 		return User.findOne({ clerkId })
 	} catch (error) {
-		console.log(error)
 		throw new Error('Something went wrong!')
 	}
 }

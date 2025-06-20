@@ -11,7 +11,6 @@ export const getSections = async (course: string) => {
 		await connectToDatabase()
 		return await Section.find({ course }).sort({ position: 1 })
 	} catch (error) {
-		console.log(error)
 		throw new Error('Something went wrong!')
 	}
 }
@@ -28,7 +27,6 @@ export const createSection = async (
 		await Section.create({ course, title, position })
 		revalidatePath(path)
 	} catch (error) {
-		console.log(error)
 		throw new Error('Something went wrong!')
 	}
 }
@@ -42,7 +40,6 @@ export const updateSection = async (params: IUpdateSection) => {
 		}
 		revalidatePath(path)
 	} catch (error) {
-		console.log(error)
 		throw new Error('Something went wrong!')
 	}
 }
@@ -52,7 +49,6 @@ export const getSectionById = async (id: string) => {
 		await connectToDatabase()
 		return await Section.findById(id)
 	} catch (error) {
-		console.log(error)
 		throw new Error('Something went wrong!')
 	}
 }
@@ -64,7 +60,6 @@ export const deleteSection = async (id: string, path: string) => {
 		await Lesson.deleteMany({ section: id })
 		revalidatePath(path)
 	} catch (error) {
-		console.log(error)
 		throw new Error('Something went wrong!')
 	}
 }
@@ -79,7 +74,6 @@ export const updateSectionTitle = async (
 		await Section.findByIdAndUpdate(id, { title })
 		revalidatePath(path)
 	} catch (error) {
-		console.log(error)
 		throw new Error('Something went wrong!')
 	}
 }

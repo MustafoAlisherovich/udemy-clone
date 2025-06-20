@@ -6,12 +6,12 @@ import Section from '@/database/section.model'
 import Lesson from '@/database/lesson.model'
 import { revalidatePath } from 'next/cache'
 
-export const getLessons = async (sectionId: string) => {
+export const getLessons = async (section: string) => {
 	try {
 		await connectToDatabase()
-		return await Lesson.find({ sectionId }).sort({ position: 1 })
+		return await Lesson.find({ section }).sort({ position: 1 })
 	} catch (error) {
-		console.log(error)
+		throw new Error('Something went wrong while getting courses!')
 	}
 }
 
@@ -38,7 +38,6 @@ export const createLesson = async (params: ICreateLesson) => {
 		existSection.save()
 		revalidatePath(path)
 	} catch (error) {
-		console.log(error)
 		throw new Error('Something went wrong!')
 	}
 }
@@ -52,9 +51,7 @@ export const deleteLesson = async (id: string, path: string) => {
 		section.save()
 		await Lesson.findByIdAndDelete(id)
 		revalidatePath(path)
-	} catch (error) {
-		console.log(error)
-	}
+	} catch (error) {}
 }
 
 export const editLesson = async (
@@ -73,7 +70,6 @@ export const editLesson = async (
 		await Lesson.findByIdAndUpdate(lessonId, { ...lesson, duration })
 		revalidatePath(path)
 	} catch (error) {
-		console.log(error)
 		throw new Error('Something went wrong!')
 	}
 }
@@ -87,7 +83,6 @@ export const editLessonPosition = async (params: IUpdatePosition) => {
 		}
 		revalidatePath(path)
 	} catch (error) {
-		console.log(error)
 		throw new Error('Something went wrong!')
 	}
 }

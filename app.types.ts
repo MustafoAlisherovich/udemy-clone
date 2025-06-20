@@ -13,6 +13,11 @@ export interface ICourse {
 	published: boolean
 	slug: string
 	tags: string
+	instructor: IUser
+	updatedAt: string
+	totalLessons: number
+	totalSections: number
+	totalDuration: string
 }
 
 export interface ISection {
@@ -30,9 +35,9 @@ export interface ILesson {
 	content: string
 	free: boolean
 	duration: {
-		hours: string
-		minutes: string
-		seconds: string
+		hours: number
+		minutes: number
+		seconds: number
 	}
 }
 
