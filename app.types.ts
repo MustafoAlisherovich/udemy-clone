@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 export interface ICourse {
 	_id: string
 	title: string
@@ -25,6 +26,7 @@ export interface ISection {
 	_id: string
 	position: number
 	course: string
+	lessons: ILesson[]
 }
 
 export interface ILesson {

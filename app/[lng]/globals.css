@@ -73,3 +73,7 @@
 		@apply bg-background text-foreground font-inter;
 	}
 }
+
+.accordion-course > svg {
+	@apply hidden;
+}
