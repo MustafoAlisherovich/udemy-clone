@@ -40,7 +40,7 @@ function RootLayout({ children, params: { lng } }: Props) {
 		<ClerkProvider localization={local}>
 			<html lang={lng} dir={dir(lng)} suppressHydrationWarning>
 				<body
-					className={`${inter.variable} ${spaceGrotesk.variable} overflow-x-hidden`}
+					className={`${inter.variable} ${spaceGrotesk.variable} custom-scrollbar overflow-x-hidden`}
 					suppressHydrationWarning
 				>
 					<ThemeProvider
