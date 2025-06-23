@@ -2,7 +2,7 @@
 
 import { deleteCourse, updateCourse } from '@/actions/course.action'
 import { ICourse } from '@/app.types'
-import ConfirmDeleteModal from '@/components/modal/confirm-delete.modal'
+import ConfirmDeleteModal from '@/components/modals/confirm-delete.modal'
 import { Button } from '@/components/ui/button'
 import { usePathname, useRouter } from 'next/navigation'
 import { toast } from 'sonner'
