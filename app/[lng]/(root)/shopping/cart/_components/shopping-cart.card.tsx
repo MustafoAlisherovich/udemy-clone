@@ -58,7 +58,7 @@ function ShoppingCartCard(item: Props) {
 					</div>
 				</div> */}
 				<h1 className='font-spaceGrotesk text-xl font-bold max-md:hidden'>
-					{totalPrice().toLocaleString('en-US', {
+					{item.currentPrice.toLocaleString('en-US', {
 						style: 'currency',
 						currency: 'USD',
 					})}
