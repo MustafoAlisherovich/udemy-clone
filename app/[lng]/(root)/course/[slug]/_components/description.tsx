@@ -17,8 +17,14 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@clerk/nextjs'
 import FillLoading from '@/components/shared/fill-loading'
 import { useCart } from '@/hooks/use-card'
+import Link from 'next/link'
 
-function Description(course: ICourse) {
+interface Props {
+	course: ICourse
+	isPurchase: boolean
+}
+
+function Description({ course, isPurchase }: Props) {
 	const [isLoading, setIsLoading] = useState(false)
 
 	const { userId } = useAuth()
@@ -31,19 +37,6 @@ function Description(course: ICourse) {
 		addToCart(course)
 		router.push('/shopping/cart')
 	}
-
-	// const onPurchase = async () => {
-	// 	setIsLoading(true)
-	// 	const promise = purchaseCourse(course._id, userId!)
-	// 		.then(() => router.push(`/${lng}/dashboard/${course._id}`))
-	// 		.catch(() => setIsLoading(false))
-
-	// 	toast.promise(promise, {
-	// 		loading: t('loading'),
-	// 		success: t('successfully'),
-	// 		error: t('error'),
-	// 	})
-	// }
 
 	return (
 		<div className='rounded-md border bg-secondary/50 p-4 shadow-lg dark:shadow-white/20 lg:sticky lg:top-24 lg:p-6'>
@@ -63,14 +56,21 @@ function Description(course: ICourse) {
 				</div>
 			</div>
 
-			<Button
-				size={'lg'}
-				className='relative mt-2 w-full font-bold'
-				onClick={onCart}
-				disabled={isLoading}
-			>
-				{t('buyNow')}
-			</Button>
+			{isPurchase ? (
+				<Button size={'lg'} className='relative mt-2 w-full font-bold' asChild>
+					<Link href={`/dashboard/${course._id}`}>{t('toLesson')}</Link>
+				</Button>
+			) : (
+				<Button
+					size={'lg'}
+					className='relative mt-2 w-full font-bold'
+					onClick={onCart}
+					disabled={isLoading}
+				>
+					{t('buyNow')}
+				</Button>
+			)}
+
 			<Button
 				size={'lg'}
 				className='relative mt-2 w-full font-bold'
