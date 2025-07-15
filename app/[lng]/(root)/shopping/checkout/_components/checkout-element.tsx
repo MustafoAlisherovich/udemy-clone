@@ -8,12 +8,17 @@ import { Separator } from '@/components/ui/separator'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import Checkout from './checkout'
+import { ICard } from '@/app.types'
 
 const stripePromise = loadStripe(
 	process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 )
 
-function CheckoutElement() {
+interface Props {
+	cards: ICard[]
+}
+
+function CheckoutElement({ cards }: Props) {
 	const t = useTranslate()
 	const { totalPrice, taxes, carts } = useCart()
 
@@ -28,7 +33,7 @@ function CheckoutElement() {
 						<p className='text-sm text-muted-foreground'>{t('fillDetails')}</p>
 
 						<Elements stripe={stripePromise}>
-							<Checkout />
+							<Checkout cards={cards} />
 						</Elements>
 					</CardContent>
 				</Card>
