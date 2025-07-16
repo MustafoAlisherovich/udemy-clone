@@ -1,22 +1,22 @@
-import TopBar from '@/components/shared/top-bar'
-import Hero from './_components/hero'
-import Overview from './_components/overview'
-import Description from './_components/description'
-import { Separator } from '@/components/ui/separator'
-import {
-	Carousel,
-	CarouselContent,
-	CarouselItem,
-} from '@/components/ui/carousel'
-import CourseCard from '@/components/cards/course.card'
-import { translation } from '@/i18n/server'
 import {
 	getDetailedCourse,
 	getFeaturedCourse,
 	getIsPurchase,
 } from '@/actions/course.action'
 import { ICourse } from '@/app.types'
+import CourseCard from '@/components/cards/course.card'
+import TopBar from '@/components/shared/top-bar'
+import {
+	Carousel,
+	CarouselContent,
+	CarouselItem,
+} from '@/components/ui/carousel'
+import { Separator } from '@/components/ui/separator'
+import { translation } from '@/i18n/server'
 import { auth } from '@clerk/nextjs'
+import Description from './_components/description'
+import Hero from './_components/hero'
+import Overview from './_components/overview'
 
 interface Props {
 	params: {

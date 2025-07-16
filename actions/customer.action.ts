@@ -3,6 +3,7 @@
 import User from '@/database/user.model'
 import { connectToDatabase } from '@/lib/mongoose'
 import stripe from '@/lib/stripe'
+import { revalidatePath } from 'next/cache'
 
 export const createCustomer = async (userId: string) => {
 	try {
@@ -41,12 +42,28 @@ export const getCustomer = async (clerkId: string) => {
 
 export const attachPayment = async (
 	paymentMethod: string,
-	customer: string
+	customer: string,
+	path?: string
 ) => {
 	try {
+		if (path) {
+			revalidatePath(path)
+		}
 		return await stripe.paymentMethods.attach(paymentMethod, { customer })
 	} catch (error) {
 		throw new Error("Couldn't attach payment method")
+	}
+}
+
+export const detachPaymentMethod = async (
+	paymentMethod: string,
+	path: string
+) => {
+	try {
+		await stripe.paymentMethods.detach(paymentMethod)
+		revalidatePath(path)
+	} catch (error) {
+		throw new Error("Couldn't detach payment method")
 	}
 }
 
@@ -64,5 +81,21 @@ export const getCustomerCards = async (clerkId: string) => {
 		return paymentMethods.data
 	} catch (error) {
 		throw new Error("Couldn't get customer cards")
+	}
+}
+
+export const getPaymentIntent = async (clerkId: string) => {
+	try {
+		const customer = await getCustomer(clerkId)
+
+		const payments = await stripe.paymentIntents.list({
+			customer: customer.id,
+			limit: 100,
+			expand: ['data.payment_method'],
+		})
+
+		return payments.data
+	} catch (error) {
+		throw new Error("Couldn't get payment intent")
 	}
 }

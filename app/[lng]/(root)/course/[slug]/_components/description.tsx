@@ -58,14 +58,14 @@ function Description({ course, isPurchase }: Props) {
 		<div className='rounded-md border bg-secondary/50 p-4 shadow-lg dark:shadow-white/20 lg:sticky lg:top-24 lg:p-6'>
 			<div className='flex items-center justify-between font-spaceGrotesk'>
 				<div className='text-2xl font-bold'>
-					{course.oldPrice.toLocaleString('en-US', {
+					{course.currentPrice.toLocaleString('en-US', {
 						style: 'currency',
 						currency: 'USD',
 					})}
 				</div>
 				<div className='font-bold line-through'>
 					{' '}
-					{course.currentPrice.toLocaleString('en-US', {
+					{course.oldPrice.toLocaleString('en-US', {
 						style: 'currency',
 						currency: 'USD',
 					})}
