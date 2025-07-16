@@ -1,8 +1,11 @@
 'use client'
 
+import { addWishlistCourse } from '@/actions/course.action'
 import { ICourse } from '@/app.types'
 import { Button } from '@/components/ui/button'
+import { useCart } from '@/hooks/use-card'
 import useTranslate from '@/hooks/use-translate'
+import { useAuth } from '@clerk/nextjs'
 import {
 	BarChart2,
 	Clock,
@@ -10,14 +13,12 @@ import {
 	Languages,
 	MonitorPlay,
 } from 'lucide-react'
-import { GrCertificate } from 'react-icons/gr'
-import { BiCategory } from 'react-icons/bi'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { useAuth } from '@clerk/nextjs'
-import FillLoading from '@/components/shared/fill-loading'
-import { useCart } from '@/hooks/use-card'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { BiCategory } from 'react-icons/bi'
+import { GrCertificate } from 'react-icons/gr'
+import { toast } from 'sonner'
 
 interface Props {
 	course: ICourse
@@ -36,6 +37,21 @@ function Description({ course, isPurchase }: Props) {
 		setIsLoading(true)
 		addToCart(course)
 		router.push('/shopping/cart')
+	}
+
+	const onAdd = () => {
+		if (!userId) return toast.error('Please Sign Up!')
+		setIsLoading(true)
+
+		const promise = addWishlistCourse(course._id, userId!).finally(() =>
+			setIsLoading(false)
+		)
+
+		toast.promise(promise, {
+			loading: t('loading'),
+			success: t('successfully'),
+			error: `${t('alreadyAdded')} Wishlist!`,
+		})
 	}
 
 	return (
@@ -76,6 +92,7 @@ function Description({ course, isPurchase }: Props) {
 				className='relative mt-2 w-full font-bold'
 				variant={'outline'}
 				disabled={isLoading}
+				onClick={onAdd}
 			>
 				{t('addWishlist')}
 			</Button>

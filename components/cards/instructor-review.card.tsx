@@ -1,19 +1,25 @@
 'use client'
 
-import { Flag } from 'lucide-react'
-import { Button } from '../ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import ReactStars from 'react-stars'
-import { IReview } from '@/app.types'
-import { formatDistanceToNow } from 'date-fns'
-import { cn } from '@/lib/utils'
-import { useState } from 'react'
-import { usePathname } from 'next/navigation'
 import { setFlag } from '@/actions/review.action'
+import { IReview } from '@/app.types'
+import { cn } from '@/lib/utils'
+import { formatDistanceToNow } from 'date-fns'
+import { Flag } from 'lucide-react'
+import { usePathname } from 'next/navigation'
+import { useState } from 'react'
+import { FaCheck, FaTimes } from 'react-icons/fa'
+import ReactStars from 'react-stars'
 import { toast } from 'sonner'
 import FillLoading from '../shared/fill-loading'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Button } from '../ui/button'
 
-function InstructorReviewCard({ review }: { review: IReview }) {
+interface Props {
+	review: IReview
+	isProfile?: boolean
+}
+
+function InstructorReviewCard({ review, isProfile }: Props) {
 	const [isLoading, setIsLoading] = useState(false)
 	const pathname = usePathname()
 
@@ -57,16 +63,29 @@ function InstructorReviewCard({ review }: { review: IReview }) {
 					</div>
 				</div>
 			</div>
-			<Button
-				size={'icon'}
-				variant={'ghost'}
-				className='self-start'
-				onClick={handleFlag}
-			>
-				<Flag
-					className={cn('text-muted-foreground', review.isFlag && 'fill-white')}
-				/>
-			</Button>
+			{isProfile ? (
+				<Button variant={'ghost'} size={'icon'} className='self-start'>
+					{review.isFlag ? (
+						<FaTimes className='text-red-500' />
+					) : (
+						<FaCheck className='text-green-500' />
+					)}
+				</Button>
+			) : (
+				<Button
+					size={'icon'}
+					variant={'ghost'}
+					className='self-start'
+					onClick={handleFlag}
+				>
+					<Flag
+						className={cn(
+							'text-muted-foreground',
+							review.isFlag && 'fill-white'
+						)}
+					/>
+				</Button>
+			)}
 		</div>
 	)
 }

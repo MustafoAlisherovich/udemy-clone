@@ -1,9 +1,10 @@
 'use server'
 
-import { connectToDatabase } from '@/lib/mongoose'
-import { ICreateUser, IUpdateUser } from './types'
+import Review from '@/database/review.model'
 import User from '@/database/user.model'
+import { connectToDatabase } from '@/lib/mongoose'
 import { revalidatePath } from 'next/cache'
+import { ICreateUser, IUpdateUser } from './types'
 
 export const createUser = async (data: ICreateUser) => {
 	try {
@@ -47,5 +48,21 @@ export const getUserById = async (clerkId: string) => {
 		return User.findOne({ clerkId })
 	} catch (error) {
 		throw new Error('Something went wrong!')
+	}
+}
+
+export const getUserReviews = async (clerkId: string) => {
+	try {
+		await connectToDatabase()
+		const user = await User.findOne({ clerkId }).select('_id')
+
+		const reviews = await Review.find({ user: user._id })
+			.sort({ createdAt: -1 })
+			.populate({ path: 'user', model: User, select: 'fullName picture' })
+			.populate({ path: 'course', model: 'Course', select: 'title' })
+
+		return reviews
+	} catch (error) {
+		throw new Error('Error fetching user reviews. Please try again')
 	}
 }

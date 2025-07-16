@@ -1,19 +1,19 @@
 'use server'
 
-import Course from '@/database/course.model'
-import { connectToDatabase } from '@/lib/mongoose'
-import { GetAllCoursesParams, GetCoursesParams, ICreateCourse } from './types'
-import { revalidatePath } from 'next/cache'
 import { ICourse, ILesson } from '@/app.types'
-import User from '@/database/user.model'
-import { cache } from 'react'
-import Section from '@/database/section.model'
+import Course from '@/database/course.model'
 import Lesson from '@/database/lesson.model'
+import Purchase from '@/database/purchase.model'
+import Review from '@/database/review.model'
+import Section from '@/database/section.model'
+import UserProgress from '@/database/user-progress.model'
+import User from '@/database/user.model'
+import { connectToDatabase } from '@/lib/mongoose'
 import { calculateTotalDuration } from '@/lib/utils'
 import { FilterQuery } from 'mongoose'
-import Purchase from '@/database/purchase.model'
-import UserProgress from '@/database/user-progress.model'
-import Review from '@/database/review.model'
+import { revalidatePath } from 'next/cache'
+import { cache } from 'react'
+import { GetAllCoursesParams, GetCoursesParams, ICreateCourse } from './types'
 
 export const createCourse = async (data: ICreateCourse, clerkId: string) => {
 	try {
@@ -358,6 +358,28 @@ export const addArchiveCourse = async (courseId: string, clerkId: string) => {
 	}
 }
 
+export const addWishlistCourse = async (courseId: string, clerkId: string) => {
+	try {
+		await connectToDatabase()
+		const isWishlist = await User.findOne({
+			clerkId,
+			wishlistCourses: courseId,
+		})
+
+		if (isWishlist) {
+			throw new Error('Course already added to wishlist')
+		}
+
+		const user = await User.findOne({ clerkId })
+
+		await User.findByIdAndUpdate(user._id, {
+			$push: { wishlistCourses: courseId },
+		})
+	} catch (error) {
+		throw new Error('Something went wrong while adding wishlist course!')
+	}
+}
+
 export const getIsPurchase = async (clerkId: string, courseId: string) => {
 	try {
 		await connectToDatabase()
@@ -428,5 +450,26 @@ export const getStudentCourse = async (clerkId: string) => {
 		return { allCourses, expenses }
 	} catch (error) {
 		throw new Error('Something went wrong while getting student course!')
+	}
+}
+
+export const getWishlist = async (clerkId: string) => {
+	try {
+		await connectToDatabase()
+		const user = await User.findOne({ clerkId }).select('wishlistCourses')
+
+		const wishlistCourses = await Course.find({
+			_id: { $in: user.wishlistCourses },
+		})
+			.select('previewImage title slug oldPrice currentPrice instructor')
+			.populate({
+				path: 'instructor',
+				select: 'fullName picture',
+				model: User,
+			})
+
+		return wishlistCourses
+	} catch (error) {
+		throw new Error('Something went wrong while getting wishlist!')
 	}
 }
