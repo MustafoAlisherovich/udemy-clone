@@ -1,16 +1,16 @@
 import { getCourseById } from '@/actions/course.action'
-import Header from '../../_components/header'
-import Actions from './_components/actions'
+import { getSections } from '@/actions/section.action'
+import Header from '@/components/shared/header'
 import { Separator } from '@/components/ui/separator'
 import { Images, LayoutPanelLeft, Settings } from 'lucide-react'
+import Actions from './_components/actions'
 import CourseFields from './_components/course-fields'
 import Description from './_components/description'
 import Information from './_components/information'
-import SelectFields from './_components/select-fields'
-import Sections from './_components/sections'
-import Price from './_components/price'
 import PreviewImage from './_components/preview-image'
-import { getSections } from '@/actions/section.action'
+import Price from './_components/price'
+import Sections from './_components/sections'
+import SelectFields from './_components/select-fields'
 
 async function Page({ params }: { params: { courseId: string } }) {
 	const courseJSON = await getCourseById(params.courseId)

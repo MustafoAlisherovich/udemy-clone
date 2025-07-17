@@ -1,13 +1,13 @@
-import { Separator } from '@/components/ui/separator'
-import Header from '../../../_components/header'
+import { getLessons } from '@/actions/lesson.action'
 import { getSectionById } from '@/actions/section.action'
+import Header from '@/components/shared/header'
 import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import { MoveLeft, Settings, Settings2 } from 'lucide-react'
 import Link from 'next/link'
 import Action from './_components/action'
-import SectionField from './_components/section-field'
 import Lessons from './_components/lessons'
-import { getLessons } from '@/actions/lesson.action'
+import SectionField from './_components/section-field'
 
 interface Params {
 	params: { sectionId: string; courseId: string }

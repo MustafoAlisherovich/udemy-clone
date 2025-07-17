@@ -1,10 +1,10 @@
-import { Separator } from '@/components/ui/separator'
-import Header from '../_components/header'
-import InstructorReviewCard from '@/components/cards/instructor-review.card'
-import { auth } from '@clerk/nextjs'
-import { IReview, SearchParamsProps } from '@/app.types'
-import Pagination from '@/components/shared/pagination'
 import { getReviews } from '@/actions/review.action'
+import { IReview, SearchParamsProps } from '@/app.types'
+import InstructorReviewCard from '@/components/cards/instructor-review.card'
+import Header from '@/components/shared/header'
+import Pagination from '@/components/shared/pagination'
+import { Separator } from '@/components/ui/separator'
+import { auth } from '@clerk/nextjs'
 
 async function Page({ searchParams }: SearchParamsProps) {
 	const { userId } = auth()

@@ -1,9 +1,9 @@
-import Header from '../_components/header'
-import InstructorCourseCard from '@/components/cards/instructor-course.card'
 import { getCourses } from '@/actions/course.action'
-import { auth } from '@clerk/nextjs'
 import { SearchParamsProps } from '@/app.types'
+import InstructorCourseCard from '@/components/cards/instructor-course.card'
+import Header from '@/components/shared/header'
 import Pagination from '@/components/shared/pagination'
+import { auth } from '@clerk/nextjs'
 
 async function Page({ searchParams }: SearchParamsProps) {
 	const { userId } = auth()
