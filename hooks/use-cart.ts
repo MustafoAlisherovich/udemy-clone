@@ -1,5 +1,4 @@
 import { ICourse } from '@/app.types'
-import { id } from 'date-fns/locale'
 import { create } from 'zustand'
 
 interface ICart extends ICourse {
@@ -12,7 +11,7 @@ interface ICartStore {
 	removeFromCart: (id: string) => void
 	increment: (id: string) => void
 	decrement: (id: string) => void
-	totalPrice: () => number
+	totalPrice: (percentOff?: number) => number
 	cartsLength: () => number
 	taxes: () => number
 	clearCart: () => void
@@ -25,13 +24,7 @@ export const useCart = create<ICartStore>((set, get) => ({
 		const existing = carts.find(cart => cart._id === course._id)
 		if (existing) {
 			set(state => {
-				const newCarts = state.carts.map(cart => {
-					if (cart._id === course._id) {
-						return { ...cart, quantity: cart.quantity + 1 }
-					}
-					return cart
-				})
-
+				const newCarts = state.carts.map(cart => cart)
 				return { carts: newCarts }
 			})
 		} else {
@@ -49,9 +42,9 @@ export const useCart = create<ICartStore>((set, get) => ({
 			if (cart._id === id) {
 				return { ...cart, quantity: cart.quantity + 1 }
 			}
+
 			return cart
 		})
-
 		set({ carts: newCarts })
 	},
 	decrement: (id: string) => {
@@ -60,18 +53,21 @@ export const useCart = create<ICartStore>((set, get) => ({
 			if (cart._id === id) {
 				return { ...cart, quantity: cart.quantity - 1 }
 			}
+
 			return cart
 		})
-
 		set({ carts: newCarts })
 	},
-	totalPrice: () => {
+	totalPrice: (percentOff?: number) => {
 		const { carts } = get()
 
-		return carts.reduce(
-			(acc, cart) => acc + cart.currentPrice * cart.quantity,
-			0
-		)
+		const total = carts.reduce((acc, cart) => acc + cart.currentPrice, 0)
+
+		if (percentOff) {
+			return total - (total * percentOff) / 100
+		}
+
+		return total
 	},
 	cartsLength: () => {
 		return get().carts.reduce((acc, cart) => acc + cart.quantity, 0)

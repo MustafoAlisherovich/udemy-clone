@@ -1,7 +1,7 @@
 import { ICourse } from '@/app.types'
 import { Button } from '@/components/ui/button'
-import { useCart } from '@/hooks/use-card'
-import { ArrowBigDownDash, ArrowBigUpDash, Trash2 } from 'lucide-react'
+import { useCart } from '@/hooks/use-cart'
+import { Trash2 } from 'lucide-react'
 import Image from 'next/image'
 
 interface Props extends ICourse {

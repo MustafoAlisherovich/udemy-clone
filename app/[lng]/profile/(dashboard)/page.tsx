@@ -57,7 +57,7 @@ async function Page({ params }: LngParams) {
 
 			<Header
 				title={t('bankAccounts')}
-				description={t('bankAccountDescription')}
+				description={t('bankAccountsDescription')}
 			/>
 			<div className='mt-4 grid grid-cols-2 gap-8 max-md:grid-cols-1'>
 				{cards

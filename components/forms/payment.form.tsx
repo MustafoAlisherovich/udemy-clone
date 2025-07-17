@@ -1,6 +1,6 @@
 'use client'
 
-import { useCart } from '@/hooks/use-card'
+import { useCart } from '@/hooks/use-cart'
 import useTranslate from '@/hooks/use-translate'
 import { addressSchema } from '@/lib/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -56,7 +56,7 @@ function PaymentForm({ onHandler, isProfile }: Props) {
 
 	const onSubmit = async (values: z.infer<typeof addressSchema>) => {
 		setLoading(true)
-		onHandler(values)
+		onHandler(values).finally(() => setLoading(false))
 	}
 
 	return (

@@ -3,7 +3,7 @@
 import { addWishlistCourse } from '@/actions/course.action'
 import { ICourse } from '@/app.types'
 import { Button } from '@/components/ui/button'
-import { useCart } from '@/hooks/use-card'
+import { useCart } from '@/hooks/use-cart'
 import useTranslate from '@/hooks/use-translate'
 import { useAuth } from '@clerk/nextjs'
 import {

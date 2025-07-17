@@ -2,14 +2,14 @@
 
 import NoResult from '@/components/shared/no-result'
 import TopBar from '@/components/shared/top-bar'
-import { Card, CardContent } from '@/components/ui/card'
-import { useCart } from '@/hooks/use-card'
-import useTranslate from '@/hooks/use-translate'
-import ShoppingCartCard from './_components/shopping-cart.card'
-import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+import { Card, CardContent } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { useCart } from '@/hooks/use-cart'
+import useTranslate from '@/hooks/use-translate'
 import { ArrowRight } from 'lucide-react'
+import Link from 'next/link'
+import ShoppingCartCard from './_components/shopping-cart.card'
 
 function Page() {
 	const { carts, totalPrice, taxes } = useCart()
