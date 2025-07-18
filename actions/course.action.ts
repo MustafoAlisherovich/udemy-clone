@@ -13,7 +13,12 @@ import { calculateTotalDuration } from '@/lib/utils'
 import { FilterQuery } from 'mongoose'
 import { revalidatePath } from 'next/cache'
 import { cache } from 'react'
-import { GetAllCoursesParams, GetCoursesParams, ICreateCourse } from './types'
+import {
+	GetAllCoursesParams,
+	GetCoursesParams,
+	GetPaginationParams,
+	ICreateCourse,
+} from './types'
 
 export const createCourse = async (data: ICreateCourse, clerkId: string) => {
 	try {
@@ -471,5 +476,32 @@ export const getWishlist = async (clerkId: string) => {
 		return wishlistCourses
 	} catch (error) {
 		throw new Error('Something went wrong while getting wishlist!')
+	}
+}
+
+export const getAdminCourses = async (params: GetPaginationParams) => {
+	try {
+		await connectToDatabase()
+		const { page = 1, pageSize = 3 } = params
+
+		const skipAmount = (page - 1) * pageSize
+
+		const courses = await Course.find()
+			.skip(skipAmount)
+			.limit(pageSize)
+			.sort({ createdAt: -1 })
+			.populate('instructor previewImage title ')
+			.populate({
+				path: 'instructor',
+				select: 'fullName picture',
+				model: User,
+			})
+
+		const totalCourses = await Course.countDocuments()
+		const isNext = totalCourses > skipAmount + courses.length
+
+		return { totalCourses, isNext, courses }
+	} catch (error) {
+		throw new Error('Something went wrong while getting admin courses!')
 	}
 }

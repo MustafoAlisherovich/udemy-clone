@@ -4,7 +4,7 @@ import Review from '@/database/review.model'
 import User from '@/database/user.model'
 import { connectToDatabase } from '@/lib/mongoose'
 import { revalidatePath } from 'next/cache'
-import { ICreateUser, IUpdateUser } from './types'
+import { GetPaginationParams, ICreateUser, IUpdateUser } from './types'
 
 export const createUser = async (data: ICreateUser) => {
 	try {
@@ -64,5 +64,26 @@ export const getUserReviews = async (clerkId: string) => {
 		return reviews
 	} catch (error) {
 		throw new Error('Error fetching user reviews. Please try again')
+	}
+}
+
+export const getAdminInstructors = async (params: GetPaginationParams) => {
+	try {
+		await connectToDatabase()
+		const { page = 1, pageSize = 3 } = params
+
+		const skipAmount = (page - 1) * pageSize
+
+		const instructors = await User.find({ role: 'instructor' })
+			.skip(skipAmount)
+			.limit(pageSize)
+			.sort({ createdAt: -1 })
+
+		const totalInstructor = await User.countDocuments({ role: 'instructor' })
+		const isNext = totalInstructor > skipAmount + instructors.length
+
+		return { instructors, isNext, totalInstructor }
+	} catch (error) {
+		throw new Error('Error getting instructor!')
 	}
 }

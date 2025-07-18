@@ -1,3 +1,5 @@
+import { LucideIcon } from 'lucide-react'
+
 /* eslint-disable no-use-before-define */
 export interface ICourse {
 	_id: string
@@ -116,4 +118,10 @@ export interface IPayment {
 			last4: string
 		}
 	}
+}
+
+export interface INavlinks {
+	label: string
+	route: string
+	icon: LucideIcon
 }

@@ -1,12 +1,12 @@
 'use server'
 
 import { IReview } from '@/app.types'
+import Course from '@/database/course.model'
 import Review from '@/database/review.model'
 import User from '@/database/user.model'
 import { connectToDatabase } from '@/lib/mongoose'
-import { GetReviewParams } from './types'
-import Course from '@/database/course.model'
 import { revalidatePath } from 'next/cache'
+import { GetPaginationParams, GetReviewParams } from './types'
 
 export const createReview = async (
 	data: Partial<IReview>,
@@ -129,5 +129,28 @@ export const getReviewPercentage = async (id: string) => {
 		return percentages
 	} catch (error) {
 		throw new Error('Error getting percentage')
+	}
+}
+
+export const getAdminReviews = async (params: GetPaginationParams) => {
+	try {
+		await connectToDatabase()
+		const { page = 1, pageSize = 3 } = params
+
+		const skipAmount = (page - 1) * pageSize
+
+		const reviews = await Review.find()
+			.sort({ createdAt: -1 })
+			.skip(skipAmount)
+			.limit(pageSize)
+			.populate({ path: 'user', select: 'fullName picture', model: User })
+			.populate({ path: 'course', select: 'title', model: Course })
+
+		const totalReviews = await Review.countDocuments()
+		const isNext = totalReviews > skipAmount + reviews.length
+
+		return { reviews, totalReviews, isNext }
+	} catch (error) {
+		throw new Error('Error getting admin reviews')
 	}
 }
