@@ -108,6 +108,13 @@ function AllCourses({ result }: Props) {
 				/>
 			)}
 
+			<div className='mt-2 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
+				{result.courses.map((course, index) => {
+					const data = JSON.parse(JSON.stringify(course))
+					return <CourseCard key={index} {...data} />
+				})}
+			</div>
+
 			<div className='mt-10'>
 				<Pagination pageNumber={page ? +page : 1} isNext={isNext} />
 			</div>

@@ -87,3 +87,14 @@ export const getAdminInstructors = async (params: GetPaginationParams) => {
 		throw new Error('Error getting instructor!')
 	}
 }
+
+export const getInstructors = async () => {
+	try {
+		await connectToDatabase()
+		return await User.find({ approvedInstructor: true }).select(
+			'isAdmin role email website youtube github job clerkId'
+		)
+	} catch (error) {
+		throw new Error('Error getting instructors!')
+	}
+}

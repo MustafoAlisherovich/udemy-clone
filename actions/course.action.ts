@@ -44,6 +44,7 @@ export const getCourses = async (params: GetCoursesParams) => {
 		const courses = await Course.find({ instructor: _id })
 			.skip(skipAmount)
 			.limit(pageSize)
+			.populate({ path: 'instructor', select: 'fullName picture', model: User })
 
 		const totalCourses = await Course.find({ instructor: _id }).countDocuments()
 		const isNext = totalCourses > skipAmount + courses.length
@@ -490,17 +491,13 @@ export const getAdminCourses = async (params: GetPaginationParams) => {
 			.skip(skipAmount)
 			.limit(pageSize)
 			.sort({ createdAt: -1 })
-			.populate('instructor previewImage title ')
-			.populate({
-				path: 'instructor',
-				select: 'fullName picture',
-				model: User,
-			})
+			.populate('instructor previewImage title')
+			.populate({ path: 'instructor', select: 'fullName picture', model: User })
 
 		const totalCourses = await Course.countDocuments()
 		const isNext = totalCourses > skipAmount + courses.length
 
-		return { totalCourses, isNext, courses }
+		return { courses, isNext, totalCourses }
 	} catch (error) {
 		throw new Error('Something went wrong while getting admin courses!')
 	}

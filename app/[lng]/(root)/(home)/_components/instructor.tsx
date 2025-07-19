@@ -28,7 +28,9 @@ function Instructor({ instructors }: Props) {
 
 				<div className='flex items-center gap-1 self-end'>
 					<Button variant={'secondary'}>
-						<span>{t('viewAll')}</span>
+						<Link href={'/instructors'}>
+							<span>{t('viewAll')}</span>
+						</Link>
 						<MoveUpRight className='ml-2 size-5 font-bold' />
 					</Button>
 				</div>
