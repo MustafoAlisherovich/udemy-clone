@@ -69,6 +69,8 @@ export interface IUser {
 	linkedin: string
 	github: string
 	youtube: string
+	approvedInstructor: boolean
+	isAdmin: boolean
 }
 
 export interface SearchParamsProps {

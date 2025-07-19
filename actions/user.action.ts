@@ -34,11 +34,11 @@ export const updateUser = async (data: IUpdateUser) => {
 	try {
 		await connectToDatabase()
 		const { clerkId, updatedData, path } = data
-		const updatedUser = await User.findOneAndUpdate({ clerkId }, updatedData)
+		await User.findOneAndUpdate({ clerkId }, updatedData)
+
 		if (path) return revalidatePath(path)
-		return updatedUser
 	} catch (error) {
-		throw new Error('Error updating user. Please try again')
+		throw new Error('Error updating user. Please try again.')
 	}
 }
 
