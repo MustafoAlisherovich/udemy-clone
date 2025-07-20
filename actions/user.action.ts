@@ -116,7 +116,7 @@ export const getRole = async (clerkId: string) => {
 	try {
 		await connectToDatabase()
 		const user = await User.findOne({ clerkId }).select('role isAdmin')
-		return user.role
+		return user
 	} catch (error) {
 		throw new Error('Error getting role!')
 	}
