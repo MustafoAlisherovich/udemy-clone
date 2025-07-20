@@ -5,6 +5,7 @@ import FillLoading from '@/components/shared/fill-loading'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
+import useTranslate from '@/hooks/use-translate'
 import {
 	basicInstructorSchema,
 	bioSchema,
@@ -25,6 +26,7 @@ function InstructorForm() {
 	const [step, setStep] = useState(1)
 	const [loading, setLoading] = useState(false)
 	const { userId } = useAuth()
+	const t = useTranslate()
 
 	const firstForm = () => {
 		const onSubmit = async (values: z.infer<typeof basicInstructorSchema>) => {
@@ -43,8 +45,8 @@ function InstructorForm() {
 		return (
 			<>
 				<Header
-					title='Become an Instructor'
-					description='Teach what you love. Reach millions of students around the world. We provide the tools and skills to teach what you love.'
+					title={t('basicInformation')}
+					description={t('basicInformationDescription')}
 				/>
 
 				<FirstForm onHandler={onSubmit} />
@@ -68,8 +70,8 @@ function InstructorForm() {
 		return (
 			<>
 				<Header
-					title='Social media'
-					description='Teach what you love. Reach millions of students around the world. We provide the tools and skills to teach what you love.'
+					title={t('socialMedia')}
+					description={t('basicInformationDescription')}
 				/>
 
 				<SecondForm onHandler={onSubmit} />
@@ -95,8 +97,8 @@ function InstructorForm() {
 		return (
 			<>
 				<Header
-					title='Bio and Profile'
-					description='Teach what you love. Reach millions of students around the world. We provide the tools and skills to teach what you love.'
+					title={t('bioAndProfile')}
+					description={t('basicInformationDescription')}
 				/>
 
 				<ThirdForm onHandler={onSubmit} />
@@ -115,17 +117,17 @@ function InstructorForm() {
 					className='text-center'
 				/>
 				<h1 className='font-spaceGrotesk text-xl font-bold'>
-					Thank you for your submission.
+					{t('thanksSubmission')}
 				</h1>
 				<p className='text-center text-xs text-muted-foreground'>
-					We will review your application and get back to you shortly.
+					{t('thanksSubmissionDescription1')}
 				</p>
 				<p className='text-center text-xs text-muted-foreground'>
-					Please check notifications for updates.
+					{t('thanksSubmissionDescription2')}
 				</p>
 				<Button className='mt-2' asChild>
 					<Link href={'/profile/notifications'}>
-						<span>Notification</span>
+						<span>{t('notification')}</span>
 					</Link>
 				</Button>
 			</div>

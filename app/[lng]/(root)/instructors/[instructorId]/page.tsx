@@ -27,7 +27,7 @@ async function Page({ params, searchParams }: Props) {
 
 	return (
 		<>
-			<TopBar label='Single Instructor' extra={user.fullName} />
+			<TopBar label='singleInstructors' extra={user.fullName} />
 
 			<div className='container mx-auto mt-12 max-w-6xl'>
 				<div className='mt-6 flex items-center gap-6 max-md:flex-col'>
@@ -47,13 +47,13 @@ async function Page({ params, searchParams }: Props) {
 							<div className='flex items-center gap-1'>
 								<PiStudentBold />
 								<span className='font-spaceGrotesk font-bold'>
-									{result.totalStudents} Students
+									{result.totalStudents} {t('students')}
 								</span>
 							</div>
 							<div className='flex items-center gap-1'>
 								<FaList />
 								<span className='font-spaceGrotesk font-bold'>
-									{result.totalCourses} Courses
+									{result.totalCourses} {t('courses')}
 								</span>
 							</div>
 						</div>
@@ -61,7 +61,7 @@ async function Page({ params, searchParams }: Props) {
 					</div>
 				</div>
 				<h1 className='mt-4 text-center font-spaceGrotesk text-4xl font-bold'>
-					All Courses
+					{t('allCourses')}
 				</h1>
 
 				{result.courses.length === 0 && (

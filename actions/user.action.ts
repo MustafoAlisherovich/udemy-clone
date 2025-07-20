@@ -51,6 +51,19 @@ export const getUserById = async (clerkId: string) => {
 	}
 }
 
+export const getUser = async (clerkId: string) => {
+	try {
+		await connectToDatabase()
+		const user = await User.findOne({ clerkId }).select(
+			'fullName picture clerkId email role isAdmin'
+		)
+
+		return JSON.parse(JSON.stringify(user))
+	} catch (error) {
+		throw new Error('Something went wrong!')
+	}
+}
+
 export const getUserReviews = async (clerkId: string) => {
 	try {
 		await connectToDatabase()
@@ -96,5 +109,15 @@ export const getInstructors = async () => {
 		)
 	} catch (error) {
 		throw new Error('Error getting instructors!')
+	}
+}
+
+export const getRole = async (clerkId: string) => {
+	try {
+		await connectToDatabase()
+		const user = await User.findOne({ clerkId }).select('role isAdmin')
+		return user.role
+	} catch (error) {
+		throw new Error('Error getting role!')
 	}
 }
