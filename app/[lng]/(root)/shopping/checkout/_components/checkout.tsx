@@ -1,6 +1,7 @@
 'use client'
 
 import { purchaseCourse } from '@/actions/course.action'
+import { sendNotification } from '@/actions/notificiation.action'
 import { payment } from '@/actions/payment.action'
 import { ICard } from '@/app.types'
 import PaymentForm from '@/components/forms/payment.form'
@@ -102,7 +103,9 @@ function Checkout({ cards, coupon }: Props) {
 			} else {
 				for (const course of carts) {
 					purchaseCourse(course._id, userId!)
+					await sendNotification(course.instructor.clerkId, 'messageCourseSold')
 				}
+				await sendNotification(userId!, 'messageCoursePurchased')
 				router.push(`/shopping/success?pi=${paymentIntent.id}`)
 				setTimeout(clearCart, 5000)
 			}

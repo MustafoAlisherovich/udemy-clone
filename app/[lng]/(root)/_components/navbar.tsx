@@ -10,6 +10,7 @@ import { LogIn, ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
 import GlobalSearch from './global-search'
 
+import Notification from '@/components/shared/notification'
 import UserBox from '@/components/shared/user-box'
 import { useCart } from '@/hooks/use-cart'
 import useTranslate from '@/hooks/use-translate'
@@ -49,6 +50,7 @@ function Navbar() {
 						<div className='hidden gap-1 md:flex'>
 							<GlobalSearch />
 							<LanguageDropdown />
+							<Notification />
 							<Button
 								variant={cartsLength() ? 'secondary' : 'ghost'}
 								size={'icon'}

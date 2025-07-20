@@ -1,5 +1,6 @@
 'use client'
 
+import { sendNotification } from '@/actions/notificiation.action'
 import { setFlag } from '@/actions/review.action'
 import { IReview } from '@/app.types'
 import { cn } from '@/lib/utils'
@@ -26,14 +27,18 @@ function InstructorReviewCard({ review, isProfile, isAdmin }: Props) {
 
 	const handleFlag = async () => {
 		setIsLoading(true)
-		const promise = setFlag(review._id, !review.isFlag, pathname).finally(() =>
+		const upd = setFlag(review._id, !review.isFlag, pathname).finally(() =>
 			setIsLoading(false)
 		)
 
+		const not = sendNotification(review.user.clerkId, 'messageReviewFlagged')
+
+		const promise = Promise.all([upd, not])
+
 		toast.promise(promise, {
 			loading: 'Loading...',
-			success: 'Review flagged successfully!',
-			error: 'Error flagging review!',
+			success: 'Successfully',
+			error: 'Something went wrong. Please try again',
 		})
 	}
 

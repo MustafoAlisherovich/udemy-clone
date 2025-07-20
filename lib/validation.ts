@@ -86,7 +86,7 @@ export const couponSchema = z.object({
 export const basicInstructorSchema = z.object({
 	name: z.string().min(3),
 	email: z.string().email(),
-	phone: z.string().min(7),
+	phone: z.string(),
 })
 
 export const socialMediaSchema = z.object({

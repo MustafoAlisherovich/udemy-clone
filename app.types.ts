@@ -127,3 +127,11 @@ export interface INavlinks {
 	route: string
 	icon: LucideIcon
 }
+
+export interface INotification {
+	_id: string
+	user: string
+	message: string
+	isRead: boolean
+	createdAt: string
+}
