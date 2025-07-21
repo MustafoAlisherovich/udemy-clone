@@ -11,11 +11,14 @@ export default authMiddleware({
 	publicRoutes: [
 		'/:lng',
 		'/:lng/courses',
+		'/:lng/course/:slug',
 		'/:lng/blogs',
 		'/:lng/blogs/:slug',
 		'/:lng/contacts',
-		'/:lng/courses/:slug',
+		'/:lng/instructors/:instructorId',
 		'/:lng/api/uploadthing',
+		'/:lng/instructors',
+		'/:lng/shopping/cart',
 	],
 	ignoredRoutes: ['/en/api/webhook'],
 })

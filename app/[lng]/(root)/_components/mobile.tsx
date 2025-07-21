@@ -2,6 +2,7 @@
 
 import LanguageDropdown from '@/components/shared/language-dropdown'
 import Logo from '@/components/shared/logo'
+import ModeToggle from '@/components/shared/mode-toggle'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import {
@@ -15,7 +16,6 @@ import useTranslate from '@/hooks/use-translate'
 import { AlignCenter, ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
 import GlobalSearch from './global-search'
-import ModeToggle from '@/components/shared/mode-toggle'
 
 function Mobile() {
 	const t = useTranslate()
@@ -23,7 +23,11 @@ function Mobile() {
 	return (
 		<Sheet>
 			<SheetTrigger asChild className='md:hidden'>
-				<Button size={'icon'} variant={'ghost'}>
+				<Button
+					size={'icon'}
+					variant={'ghost'}
+					aria-label='mobile-hamburger-menu'
+				>
 					<AlignCenter />
 				</Button>
 			</SheetTrigger>

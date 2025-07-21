@@ -35,8 +35,9 @@ function Notification() {
 			variant={count === 0 ? 'ghost' : 'secondary'}
 			asChild
 			className='relative'
+			aria-label='notifications'
 		>
-			<Link href={'/profile/notifications'}>
+			<Link href={'/profile/notifications'} aria-label='notifications'>
 				<Bell />
 				{count > 0 && (
 					<div className='absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full bg-destructive'>

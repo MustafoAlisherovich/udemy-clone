@@ -1,6 +1,11 @@
 'use client'
 
+import { lngs } from '@/constants'
+import { cn, getCurrentLng } from '@/lib/utils'
 import { Languages } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useParams, usePathname } from 'next/navigation'
 import { Button } from '../ui/button'
 import {
 	DropdownMenu,
@@ -9,11 +14,6 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
-import { lngs } from '@/constants'
-import Image from 'next/image'
-import Link from 'next/link'
-import { cn, getCurrentLng } from '@/lib/utils'
-import { useParams, usePathname } from 'next/navigation'
 
 interface Props {
 	isMobile?: boolean
@@ -29,6 +29,7 @@ function LanguageDropdown({ isMobile = false }: Props) {
 				<Button
 					variant={'ghost'}
 					size={'icon'}
+					aria-label='language-dropdown'
 					className={cn(
 						isMobile && 'h-12 w-full bg-primary hover:bg-primary/80'
 					)}

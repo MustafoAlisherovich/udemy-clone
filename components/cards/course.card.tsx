@@ -1,18 +1,17 @@
 'use client'
 
-import Link from 'next/link'
-import { Card, CardContent } from '../ui/card'
-import Image from 'next/image'
-import { Separator } from '../ui/separator'
 import { ICourse } from '@/app.types'
+import Link from 'next/link'
+import CustomImage from '../shared/custom-image'
+import { Card, CardContent } from '../ui/card'
+import { Separator } from '../ui/separator'
 
 function CourseCard(course: ICourse) {
 	return (
 		<Link href={`/course/${course._id}`}>
 			<Card className='group w-full'>
 				<CardContent className='relative h-56 w-full'>
-					<Image
-						fill
+					<CustomImage
 						src={course.previewImage}
 						alt={course.title}
 						className='object-cover'
@@ -25,13 +24,14 @@ function CourseCard(course: ICourse) {
 					<Separator />
 					<div className='flex items-center justify-between'>
 						<div className='flex items-center gap-2'>
-							<Image
-								src={course.instructor.picture}
-								alt={course.instructor.fullName}
-								width={40}
-								height={40}
-								className='rounded-full object-cover'
-							/>
+							<div className='relative size-[40px]'>
+								<CustomImage
+									src={course.instructor.picture}
+									alt={course.instructor.fullName}
+									className='rounded-full'
+								/>
+							</div>
+
 							<p className='text-sm text-muted-foreground'>
 								{course.instructor.fullName}
 							</p>

@@ -4,6 +4,7 @@ import Review from '@/database/review.model'
 import User from '@/database/user.model'
 import { connectToDatabase } from '@/lib/mongoose'
 import { revalidatePath } from 'next/cache'
+import { cache } from 'react'
 import { GetPaginationParams, ICreateUser, IUpdateUser } from './types'
 
 export const createUser = async (data: ICreateUser) => {
@@ -42,15 +43,14 @@ export const updateUser = async (data: IUpdateUser) => {
 	}
 }
 
-export const getUserById = async (clerkId: string) => {
+export const getUserById = cache(async (clerkId: string) => {
 	try {
 		await connectToDatabase()
 		return User.findOne({ clerkId })
 	} catch (error) {
 		throw new Error('Something went wrong!')
 	}
-}
-
+})
 export const getUser = async (clerkId: string) => {
 	try {
 		await connectToDatabase()

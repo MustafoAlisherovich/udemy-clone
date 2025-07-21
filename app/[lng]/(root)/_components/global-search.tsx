@@ -1,9 +1,9 @@
 import { Button } from '@/components/ui/button'
 import { formUrlQuery, removeKeysFromQuery } from '@/lib/utils'
+import { debounce } from 'lodash'
 import { Search } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { ChangeEvent } from 'react'
-import { debounce } from 'lodash'
 
 function GlobalSearch() {
 	const pathname = usePathname()
@@ -37,7 +37,12 @@ function GlobalSearch() {
 
 	return (
 		<div className='search-box'>
-			<Button size={'icon'} variant={'ghost'} className='btn-search'>
+			<Button
+				size={'icon'}
+				variant={'ghost'}
+				className='btn-search'
+				aria-label='search-btn'
+			>
 				<Search />
 			</Button>
 			<input

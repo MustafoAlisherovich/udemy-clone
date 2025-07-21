@@ -1,6 +1,13 @@
 import TopBar from '@/components/shared/top-bar'
+import { Metadata } from 'next'
 import Image from 'next/image'
 import InstructorForm from './_components/instructor.form'
+
+export const metadata: Metadata = {
+	title: "Udemy | Muallim bo'lish",
+	description:
+		"Udemy-clone platformasida muallim bo'lish uchun ariza qoldiring. O'zingiziga mos kursni tuzing va o'rganishni boshlang!",
+}
 
 function Page() {
 	return (

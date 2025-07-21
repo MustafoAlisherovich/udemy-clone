@@ -2,10 +2,28 @@ import { Separator } from '@/components/ui/separator'
 import { getReadingTime } from '@/lib/utils'
 import { getDetailedBlog } from '@/service/blog.service'
 import { format } from 'date-fns'
-import { CalendarDays, Clock, Minus } from 'lucide-react'
-import Image from 'next/image'
 import parse from 'html-react-parser'
+import { CalendarDays, Clock, Minus } from 'lucide-react'
+import { Metadata, ResolvingMetadata } from 'next'
+import Image from 'next/image'
 import ShareBtns from './_components/share-btns'
+
+export async function generateMetadata(
+	{ params }: { params: { slug: string } },
+	parent: ResolvingMetadata
+): Promise<Metadata> {
+	const blog = await getDetailedBlog(params.slug!)
+
+	return {
+		title: blog.title,
+		description: blog.description,
+		openGraph: {
+			images: blog.image.url,
+			title: blog.title,
+			description: blog.description,
+		},
+	}
+}
 
 async function Page({ params }: { params: { slug: string } }) {
 	const blog = await getDetailedBlog(params.slug)
@@ -24,6 +42,7 @@ async function Page({ params }: { params: { slug: string } }) {
 						width={30}
 						height={30}
 						className='rounded-sm object-cover'
+						loading='lazy'
 					/>
 					<p>by {blog.author.name}</p>
 				</div>

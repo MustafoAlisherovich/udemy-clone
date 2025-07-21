@@ -246,8 +246,8 @@ export const getAllCourses = async (params: GetAllCoursesParams) => {
 		const courses = await Course.find(query)
 			.select('previewImage title slug _id oldPrice currentPrice instructor')
 			.populate({
-				path: 'instructor clerkId',
-				select: 'fullName picture',
+				path: 'instructor',
+				select: 'fullName picture clerkId',
 				model: User,
 			})
 			.skip(skipAmount)
@@ -259,6 +259,7 @@ export const getAllCourses = async (params: GetAllCoursesParams) => {
 
 		return { courses, isNext, totalCourses }
 	} catch (error) {
+		console.log(error)
 		throw new Error('Something went wrong!')
 	}
 }
