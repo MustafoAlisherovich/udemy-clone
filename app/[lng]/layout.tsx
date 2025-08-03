@@ -1,12 +1,15 @@
 import { ThemeProvider } from '@/components/providers/theme-provider'
+import AiButton from '@/components/shared/ai-button'
 import { Toaster } from '@/components/ui/sonner'
 import { languages } from '@/i18n/settings'
 import { localization } from '@/lib/utils'
 import { ChildProps } from '@/types'
 import { ClerkProvider } from '@clerk/nextjs'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { dir } from 'i18next'
 import type { Metadata } from 'next'
 import { Inter, Space_Grotesk as SpaceGrotesk } from 'next/font/google'
+import NextTopLoader from 'nextjs-toploader'
 import './globals.css'
 
 const inter = Inter({
@@ -71,10 +74,23 @@ function RootLayout({ children, params: { lng } }: Props) {
 						enableSystem
 						disableTransitionOnChange
 					>
+						<NextTopLoader
+							color='#702bb0'
+							initialPosition={0.5}
+							crawlSpeed={200}
+							height={2}
+							crawl={true}
+							showSpinner={false}
+							easing='ease'
+							speed={200}
+							shadow='0 0 10px #702bb0,0 0 5px #702bb0'
+						/>
 						<Toaster position='top-center' />
 						{children}
+						<AiButton />
 					</ThemeProvider>
 				</body>
+				<GoogleAnalytics gaId='G-QHBQTYFTW6' />
 			</html>
 		</ClerkProvider>
 	)

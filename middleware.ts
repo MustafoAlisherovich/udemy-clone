@@ -21,6 +21,7 @@ export default authMiddleware({
 		'/:lng/shopping/cart',
 		'/:lng/sign-up',
 		'/:lng/sign-in',
+		'/:lng/ai',
 	],
 	ignoredRoutes: ['/en/api/webhook'],
 })
