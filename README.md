@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎓 Udemy Clone
 
-## Getting Started
+A modern, full-featured online learning platform inspired by Udemy. Built with **Next.js 14**, **TypeScript**, **MongoDB**, **ShadCN**, and **Clerk**. This project allows users to browse, purchase, and create courses in multiple languages, with integrated **Stripe payments** and role-based access.
 
-First, run the development server:
+## 🔗 Live Demo
+
+[Click here to view the site](https://udemy-clone.mustafoalisherovich.ru)
+
+---
+
+## 📌 Features
+
+- 🔐 **Authentication & Authorization** via Clerk
+- 🧑‍🏫 **Instructor Panel**:
+  - Create, update, and manage your courses
+  - Set courses as free or paid
+  - Track total students, revenue, and reviews
+- 🧑‍🎓 **Student Dashboard**
+  - Enroll in free or paid courses
+  - Leave reviews/comments
+  - Track progress
+- 🌍 **Localization**
+  - Multilingual support: Uzbek 🇺🇿, Turkish 🇹🇷, Russian 🇷🇺, English 🇺🇸
+- 💳 **Payments**
+  - Integrated with **Stripe** for secure transactions
+  - Instructors can see revenue generated
+- 🖼️ **Image Optimization** with Next.js
+- 👮‍♂️ **Role Management**:
+  - `User`
+  - `Instructor`
+  - `Admin`
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 14, TypeScript, ShadCN UI
+- **Backend**: Next.js API routes, MongoDB
+- **Auth**: Clerk
+- **Payments**: Stripe
+- **Localization**: Next.js i18n
+- **Deployment**: Vercel / Any modern hosting
+
+---
+
+## 🧪 Getting Started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone https://github.com/your-username/udemy-clone.git
+cd udemy-clone
+npm install
