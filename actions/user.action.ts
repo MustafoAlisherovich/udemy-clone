@@ -10,7 +10,9 @@ import { GetPaginationParams, ICreateUser, IUpdateUser } from './types'
 export const createUser = async (data: ICreateUser) => {
 	try {
 		await connectToDatabase()
+
 		const { clerkId, email, fullName, picture } = data
+
 		const isExist = await User.findOne({ clerkId })
 
 		if (isExist) {
@@ -23,10 +25,11 @@ export const createUser = async (data: ICreateUser) => {
 			return updatedUser
 		}
 
-		const newUser = User.create(data)
+		const newUser = await User.create(data)
 
 		return newUser
 	} catch (error) {
+		console.log(error)
 		throw new Error('Error creating user, Please try again')
 	}
 }
