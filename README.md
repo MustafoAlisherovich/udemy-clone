@@ -8,6 +8,16 @@ A modern, full-featured online learning platform inspired by Udemy. Built with *
 
 ---
 
+## 📸 Screenshots
+
+![Homepage](./public/screenshots/home.png)
+
+![Booking](./public/screenshots/course.png)
+
+![Dashboard](./public/screenshots/admin.png)
+
+---
+
 ## 📌 Features
 
 - 🔐 **Authentication & Authorization** via Clerk
@@ -39,13 +49,13 @@ A modern, full-featured online learning platform inspired by Udemy. Built with *
 - **Auth**: Clerk
 - **Payments**: Stripe
 - **Localization**: Next.js i18n
-- **Deployment**: Vercel / Any modern hosting
+- **Deployment**: Vercel
 
 ---
 
 ## 🧪 Getting Started
 
 ```bash
-git clone https://github.com/your-username/udemy-clone.git
+git clone https://github.com/MustafoAlisherovich/udemy-clone.git
 cd udemy-clone
 npm install
