@@ -17,7 +17,7 @@ function CourseCard(course: ICourse) {
 						className='object-cover'
 					/>
 				</CardContent>
-				<div className='my-4 flex flex-col space-x-2 px-2'>
+				<div className='my-4 flex flex-col space-y-2 px-2'>
 					<h2 className='line-clamp-1 font-spaceGrotesk text-2xl font-bold'>
 						{course.title}
 					</h2>

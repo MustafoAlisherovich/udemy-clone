@@ -68,7 +68,7 @@ function FeaturedCourses({ courses }: Props) {
 
 			<Carousel
 				opts={{ align: 'start' }}
-				className='mt-6 hidden w-full md:flex'
+				className='mt-6 hidden w-full md:block'
 			>
 				<CarouselContent>
 					{courses.map(course => (
