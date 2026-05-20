@@ -12,7 +12,7 @@ A modern, full-featured online learning platform inspired by Udemy. Built with *
 
 ![Homepage](./public/screenshots/home.png)
 
-![Booking](./public/screenshots/course.png)
+![Course](./public/screenshots/course.png)
 
 ![Dashboard](./public/screenshots/admin.png)
 
